@@ -1,29 +1,33 @@
 class Solution {
-	public int romanToInt(String s) {
-		int len = s.length();
-		if (s == null || len == 0) {
-			return -1;
-		} else {
-			HashMap<Character, Integer> map1 = new HashMap<Character, Integer>();
-			map1.put('I', 1);
-			map1.put('V', 5);
-			map1.put('X', 10);
-			map1.put('L', 50);
-			map1.put('C', 100);
-			map1.put('D', 500);
-			map1.put('M', 1000);
-			int result = map1.get(s.charAt(len - 1));
-			for (int i = len - 2; i >= 0; i--) {
-				int num1 = map1.get(s.charAt(i));
-				int num2 = map1.get(s.charAt(i + 1));
-				if (num1 >= num2) {
-					result += num1;
-				} else {
-					result -= num1;
-				}
-
-			}
-			return result;
-		}
-	}
+    public int romanToInt(String s) {
+        // 判断s是否为空，直接剔除
+        int len = s.length();
+        if(s == null || len == 0) {
+            return -1;
+        }
+        else {
+            //利用HashMap存储字符和字符对应的数字，从而取得相应的数字
+            HashMap<Character, Integer> map1 = new HashMap<Character, Integer>();
+            map1.put('I', 1);
+            map1.put('V', 5);
+            map1.put('X', 10);
+            map1.put('L', 50);
+            map1.put('C', 100);
+            map1.put('D', 500);
+            map1.put('M', 1000);
+            //取得s最后一位的值，然后和倒数第二位做比较，从而判断+还是-，所谓的4,9,40,90就是后者减去前者
+            int result = map1.get(s.charAt(len-1));
+            for(int i = len - 2; i >= 0; i--) {
+                int num1 = map1.get(s.charAt(i)); //从倒数第二个字符开始，从map1中取得其值
+                int num2 = map1.get(s.charAt(i+1)); //从倒数第一个字符开始，从map1取得其值
+                if(num1 >= num2) {
+                    result += num1; //result是最后一个数，倘若num1 > num2 那么所加的数是倒数第二个
+                }
+                else {
+                    result -= num1;
+                }
+            }
+            return result;
+        }
+    }
 }
